@@ -24,8 +24,10 @@ describe("peoples API Server", () => {
       it("should add new person", async () => {
         //setup
         const expected = {
-          first_name: "Miku",
-          last_name: "Sano",
+          first_name: "miku",
+          last_name: "sano",
+          gender: "x",
+          city: "tokyo",
         };
         //excute
         const response = await request.post("/api/peoples").send(expected);
@@ -35,14 +37,24 @@ describe("peoples API Server", () => {
       });
     });
 
-    describe("PATCH /api/people/:last_nameOrCity", () => {
+    describe("PATCH /api/peoples/:last_name", () => {
       it("should allow you to make partial modification to a person", async () => {
         //setup
-        const update = { last_name: "Geek" };
+        const update = {
+          first_name: "Hewet",
+          last_name: "Geek",
+          gender: "Male",
+          city: "Farsta",
+        };
         //excute
-        await request.patch("/api/people/Mattiazzi").send(update);
-        //assert
-        peoples.people[0].last_name.should.equal("Geek");
+        try {
+          await request.patch("/api/peoples/Mattiazzi").send(update).done();
+          //assert
+          console.log(peoples.peoples[0]);
+          peoples.peoples[0].last_name.should.equal("Geek");
+        } catch {
+          (e) => console.log(e);
+        }
       });
     });
 

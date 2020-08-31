@@ -22,6 +22,27 @@ const setupServer = () => {
     res.json(req.body);
   });
 
+  //PATCH : partially replace the data
+  app.patch("/api/peoples/:last_name", (req, res) => {
+    const last_name = req.params.last_name;
+    console.log("server,params.last_name: " + last_name);
+    // iterate over array
+    // console.log("server: " + peoples.peoples);
+    for (let i = 0; i < peoples.peoples.length; i++) {
+      //if last_name of a person matches, get the object of that specific person
+      if (last_name === peoples.peoples[i].last_name) {
+        //replace the old last_name to new last_name
+        // Check req.body => find the properties to update
+        for (const key in req.body) {
+          // then assign the person key to req.body[key]
+          peoples.peoples[i][key] = req.body[key];
+        }
+      }
+    }
+    // Sends res of the entire peoples data, incluing the modified person
+    res.json(peoples.peoples);
+  });
+
   // app.listen(port, function () {
   //   console.log("listening on port: ", port);
   // });
