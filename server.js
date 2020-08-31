@@ -12,9 +12,14 @@ const setupServer = () => {
   let app = express();
   app.use(express.json());
 
-  //GET get all name from peoplesData
+  //GET: get all name from peoplesData
   app.get("/api/peoples", (req, res) => {
     res.send(peoples);
+  });
+
+  //POST : post new person to peoplesData
+  app.post("/api/peoples", (req, res) => {
+    res.json(req.body);
   });
 
   // app.listen(port, function () {

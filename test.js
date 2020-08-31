@@ -20,35 +20,45 @@ describe("peoples API Server", () => {
       JSON.parse(response.text).should.deep.equal(peoples);
     });
 
-    describe("string", () => {
-      it("should", () => {
+    describe("POST /api/peoples", () => {
+      it("should add new person", async () => {
         //setup
+        const expected = {
+          first_name: "Miku",
+          last_name: "Sano",
+        };
         //excute
+        const response = await request.post("/api/peoples").send(expected);
         //assert
+        response.should.be.json;
+        JSON.parse(response.text).should.deep.equal(expected);
       });
     });
 
-    describe("string", () => {
-      it("should", () => {
+    describe("PATCH /api/people/:last_nameOrCity", () => {
+      it("should allow you to make partial modification to a person", async () => {
         //setup
+        const update = { last_name: "Geek" };
         //excute
+        await request.patch("/api/people/Mattiazzi").send(update);
         //assert
+        peoples.people[0].last_name.should.equal("Geek");
       });
     });
 
-    describe("string", () => {
-      it("should", () => {
-        //setup
-        //excute
-        //assert
-      });
-    });
-//     describe("string", () => {
-//       it("should", () => {
-//         //setup
-//         //excute
-//         //assert
-//       });
-//     });
-//   });
+    // describe("string", () => {
+    //   it("should", () => {
+    //     //setup
+    //     //excute
+    //     //assert
+    //   });
+    // });
+    //     describe("string", () => {
+    //       it("should", () => {
+    //         //setup
+    //         //excute
+    //         //assert
+    //       });
+    //     });
+  });
 });
