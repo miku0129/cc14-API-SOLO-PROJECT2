@@ -1,8 +1,17 @@
+exports.up = function (knex, Promise) {
+  return knex.schema.createTable("peoples", function (table) {
+    table.increments().index();
 
-exports.up = function(knex) {
-  
+    table.text("first_name");
+
+    table.text("last_name");
+
+    table.text("gender");
+
+    table.text("city");
+  });
 };
 
-exports.down = function(knex) {
-  
+exports.down = function (knex, Promise) {
+  return knex.schema.dropTable("peoples");
 };
