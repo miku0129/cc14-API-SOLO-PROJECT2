@@ -43,9 +43,33 @@ const setupServer = () => {
     res.json(peoples.peoples);
   });
 
-  // app.listen(port, function () {
-  //   console.log("listening on port: ", port);
-  // });
+  //DELETE
+  //check the params to find a right person to delete their info
+  app.delete("/api/peoples/:first_name", (req, res) => {
+    const first_name = req.params.first_name;
+    //iterate over peoples array
+    for (let i = 0; i < peoples.peoples.length; i++) {
+      //if first_name is matches, delete the object of that person
+      if (peoples.peoples[i].first_name === first_name) {
+        peoples.peoples.splice(i, 1);
+        break;
+      }
+    }
+    res.json(peoples.peoples);
+  });
+
+  //put replace whole data
+  app.put("/api/peoples/:first_name", (req, res) => {
+    const first_name = req.params.first_name;
+    for (let i = 0; i < peoples.peoples.length; i++) {
+      if (first_name === peoples.peoples[i].first_name) {
+        for (const key in req.body) {
+          peoples.peoples[i][key] = req.body[key];
+        }
+      }
+    }
+    res.json(peoples.peoples);
+  });
 
   //last line
   return app;

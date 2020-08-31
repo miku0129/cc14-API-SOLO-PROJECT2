@@ -58,19 +58,39 @@ describe("peoples API Server", () => {
       });
     });
 
-    // describe("string", () => {
-    //   it("should", () => {
-    //     //setup
-    //     //excute
-    //     //assert
-    //   });
-    // });
-    //     describe("string", () => {
-    //       it("should", () => {
-    //         //setup
-    //         //excute
-    //         //assert
-    //       });
-    //     });
+    describe("DELETE /api/peoples/:first_name", () => {
+      it("should delete a info of the person", async () => {
+        //setup
+        //excute
+        try {
+          await request.delete("/api/peoples/Hewet").done();
+          //assert
+          peoples.peoples[0].first_name.should.equal("Elijah");
+        } catch {
+          (e) => console.log(e);
+        }
+      });
+    });
+
+    describe("PUT /api/peoples/:first_name", () => {
+      it("should allow you to make replace whole info about the person", async () => {
+        //setup
+        const update = {
+          first_name: "takahisa",
+          last_name: "sano",
+          gender: "Male",
+          city: "fukushima",
+        };
+        //excute
+        try {
+          await request.patch("/api/peoples/Mattiazzi").send(update).done();
+          //assert
+          console.log(peoples.peoples[0]);
+          peoples.peoples[0].last_name.should.equal("sano");
+        } catch {
+          (e) => console.log(e);
+        }
+      });
+    });
   });
 });
